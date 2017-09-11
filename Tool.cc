@@ -10,12 +10,12 @@
 
 #define _Tool
 
-void *warning(const char *c){
+void* Tool_warning(const char *c){
 	printf("[<Warning>: %s]\n",c);
 	return NULL;
 }
 
-void *nullWarning(const char *c){
+void* Tool_nullWarning(const char *c){
 	printf("[<Warning>: %s is NULL!]\n",c);
 	return NULL;
 }

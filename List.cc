@@ -2,62 +2,60 @@
 	#include "Tool.cc"
 #endif
 
-struct ListCase{
-	void *v;
-	ListCase *l;
+class ListFrame{
+	public:
+		ListFrame *l;
+
+		ListFrame(){
+			l=NULL;
+		}
+
+		void init(ListFrame *lA){
+			l=lA;
+		}
+
+		~ListFrame(){
+		}
 };
 
 class List{
 	unsigned int nbEl;
-	ListCase *l;
+	ListFrame *l;
 
-	ListCase *_getLastCase(){
-		if(l!=NULL){
-			if(nbEl==1){
-				return l;
-			}else{
-				ListCase *lc=(*l).l;
-				while((*lc).l!=NULL){
-					lc=(*lc).l;
-				}
-				return lc;
-			}
-		}
-		return NULL;
-	}
-
-	ListCase *_getCase(unsigned int i){
+	ListFrame* _getFrame(unsigned int i){
 		if(i<nbEl){
 			if(i==0){
 				return l;
 			}else{
-				ListCase *lc;
-				lc=(*l).l;
+				ListFrame *lf;
+				lf=(*l).l;
 				int i1;
 				for(i1=1;i1!=i;i1++){
-					lc=(*lc).l;
+					lf=(*lf).l;
 				}
-				return lc;
+				return lf;
 			}
 		}
 		return NULL;
 	}
 
-	unsigned char _freeValue(unsigned int i){
-		ListCase *lc;
-		lc=_getCase(i);
-		if(lc!=NULL){
-			if((*lc).v!=NULL){
-				free((*lc).v);
-				(*lc).v=NULL;
-				return 0;
+	ListFrame* _getLastFrame(){
+		if(l!=NULL){
+			if(nbEl==1){
+				return l;
+			}else{
+				ListFrame *lf=(*l).l;
+				while((*lf).l!=NULL){
+					lf=(*lf).l;
+				}
+				return lf;
 			}
-			return 1;
 		}
-		return 2;
+		return NULL;
 	}
 
-	bool _freeCase(unsigned int i){
+	/*
+	bool _freeFrame(unsigned int i){
 		if(i<nbEl){
 			if(nbEl==1){
 				free(l);
@@ -65,25 +63,25 @@ class List{
 				nbEl--;
 				return true;
 			}else{
-				ListCase *lc;
+				ListFrame *lf;
 
 				if(i==0){
-					lc=l;
+					lf=l;
 					l=(*l).l;
-					free(lc);
+					free(lf);
 					nbEl--;
 					return true;
 				}else if(i==nbEl-1){
-					lc=_getCase(nbEl-2);
-					free((*lc).l);
-					(*lc).l=NULL;
+					lf=_getFrame(nbEl-2);
+					free((*lf).l);
+					(*lf).l=NULL;
 					nbEl--;
 					return true;
 				}else{
-					ListCase *tmp;
-					lc=_getCase(i-1);
-					tmp=(*lc).l;
-					(*lc).l=(*(*lc).l).l;
+					ListFrame *tmp;
+					lf=_getFrame(i-1);
+					tmp=(*lf).l;
+					(*lf).l=(*(*lf).l).l;
 					free(tmp);
 					nbEl--;
 					return true;
@@ -92,59 +90,7 @@ class List{
 		}
 		return false;
 	}
-
-	bool _freeCaseAndValue(unsigned int i){
-		if(i<nbEl){
-			if(nbEl==1){
-				if((*l).v!=NULL){
-					free((*l).v);
-				}
-				free(l);
-				l=NULL;
-				nbEl--;
-				return true;
-			}else{
-				ListCase *lc;
-
-				if(i==0){
-					lc=l;
-					l=(*l).l;
-					if((*lc).v!=NULL){
-						free((*lc).v);
-					}
-					free(lc);
-					nbEl--;
-					return true;
-				}else if(i==nbEl-1){
-					lc=_getCase(nbEl-2);
-					if((*(*lc).l).v!=NULL){
-						free((*(*lc).l).v);
-					}
-					free((*lc).l);
-					(*lc).l=NULL;
-					nbEl--;
-					return true;
-				}else{
-					ListCase *tmp;
-					lc=_getCase(i-1);
-					tmp=(*lc).l;
-					(*lc).l=(*(*lc).l).l;
-					if((*tmp).v!=NULL){
-						free((*tmp).v);
-					}
-					free(tmp);
-					nbEl--;
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	void _initCase(ListCase* lc){
-		(*lc).v=NULL;
-		(*lc).l=NULL;
-	}
+	*/
 
 	public:
 		List(){
@@ -159,51 +105,87 @@ class List{
 			return nbEl;
 		}
 
-		void *getValueWithCase(ListCase *lc){
-			if((*lc).v!=NULL){
-				return (*lc).v;
+		void addFrameFirst(ListFrame *lf){
+			if(l!=NULL){
+				(*lf).l=l;
 			}
-			return nullWarning("List::getValue(ListCase*) : Value");
+			l=lf;
+			nbEl++;
 		}
 
-		ListCase *getCase(unsigned int i){
+		/*
+		bool freeFirstFrame()
+			nbEl--	
+		*/ 
+
+		ListFrame* getFirstFrame(){
+			if(l!=NULL){
+				return l;
+			}
+			return (ListFrame*)Tool_warning("List::getFirstFrame() : List is Empty!");
+		}
+
+		/*
+		void *addFrameFirstAndSetValue(ListFrame *lf){
+		}
+		*/
+
+		ListFrame* getFrame(unsigned int i){
 			if(nbEl!=0){
-				ListCase *lc=_getCase(i);
-				if(lc==NULL){
-					error0("List::getCase(unsigned int): Out of Length!");
+				ListFrame *lf=_getFrame(i);
+				if(lf==NULL){
+					return (ListFrame*)Tool_warning("List::getFrame(unsigned int) : Out of Length!");
 				}
+				return lf;
 			}
-			warning("List::getCase(unsigned int): List is Empty!");
-			return NULL;
+			return (ListFrame*)Tool_warning("List::getFrame(unsigned int) : List is Empty!");
 		}
 
+		void addFrameLast(ListFrame *lf){
+			ListFrame *lastF=_getLastFrame();
+			if(lastF!=NULL){
+				(*lastF).l=lf;
+			}
+			l=lf;
+			nbEl++;
+		}
+
+		/*
+		bool freeLastFrame(){
+			if(nbEl==1){
+				free(l);
+				l=NULL;
+				nbEl--;
+				return true;
+			}else{
+				ListFrame *lf=_getFrame(nbEl-2);
+				free((*lf).l);
+				(*lf).l=NULL;
+				nbEl--;
+				return true;
+			}
+			warning("List::freeLastFrame(): List is Empty!");
+			return false;
+		}
+		*/
+
+		ListFrame* getLastFrame(){
+			ListFrame *lf=_getLastFrame();
+			if(lf!=NULL){
+				return lf;
+			}
+			return (ListFrame*)Tool_warning("List::getLastFrame() : List is Empty!");
+		}
+
+		/*
 		void *getValue(unsigned int i){
-			if(nbEl!=0){
-				ListCase *lc=_getCase(i);
-				if(lc==NULL){
-					error0("List::getValue(unsigned int): Out of Length!");
-				}
-
-				if((*lc).v!=NULL){
-					return (*lc).v;
-				}
-				return nullWarning("List::getValue(unsigned int): Value");
-			}
-			warning("List::getValue(unsigned int): List is Empty!");
 		}
+		*/
 
-		void *setValue(ListCase *lc, size_t s){
-			(*lc).v=malloc(s);
-			if((*lc).v==NULL){
-				errorMemoryAllocation0("List::setValue()");
-			}
-			return (*lc).v;
-		}
-
-		bool freeBetween(unsigned int i, unsigned int i1){
-			ListCase *lc;
-			ListCase *lcTmp;
-			ListCase *lcLink;
+		/*bool freeBetween(unsigned int i, unsigned int i1){
+			ListFrame *lf;
+			ListFrame *lfTmp;
+			ListFrame *lfLink;
 
 			if(nbEl!=0){
 				if(i<nbEl){
@@ -212,14 +194,14 @@ class List{
 							if(i==i1){	
 							}else{
 								if(i==0){
-									lc=l;
+									lf=l;
 								}else{
-									lc=_getCase(i);
+									lf=_getFrame(i);
 								}
-								lcTmp=lc;
+								lfTmp=lf;
 
 								if(i1==nbEl-1){
-									while((*lc).l!=NULL){
+									while((*lf).l!=NULL){
 
 									}
 								}else{
@@ -230,7 +212,7 @@ class List{
 								}
 							}
 						}
-						error0("List::freeBetween(unsigned int, unsigned int): First int > Second int! (you should have <)");
+						Tool_error0("List::freeBetween(unsigned int, unsigned int): First int > Second int! (you should have <)");
 						return false;
 					}
 					warning("List::freeBetween(unsigned int, unsigned int): Second int Out of Length!");
@@ -242,7 +224,9 @@ class List{
 			warning("List::freeBetween(unsigned int, unsigned int): List is Empty!");
 			return false;
 		}
+		*/
 
+		/*
 		bool freeAll(){
 			if(nbEl==1){
 				if((*l).v!=NULL){
@@ -252,7 +236,7 @@ class List{
 				l=NULL;
 				return true;
 			}else{
-				ListCase *lc=l;
+				ListFrame *lf=l;
 				do{
 
 				}while(nbEl!=0);
@@ -260,217 +244,71 @@ class List{
 			warning("List::freeAll(): List is Empty!");
 			return false;
 		}
-
-		ListCase *getFirstCase(){
-			if(l!=NULL){
-				return l;
-			}
-			return (ListCase*)warning("List::getFirstCase(): List is Empty!");
-		}
-
-		void *getFirstValue(){
-			if(l!=NULL){
-				if((*l).v!=NULL){
-					return (*l).v;
-				}
-				return nullWarning("List::getFirstValue(): Value");
-			}
-			warning("List::getFirstValue(): List is Empty!");
-			return NULL;
-		}
-
-		ListCase *addCaseFirst(){
-			ListCase *lc;
-			lc=(ListCase*)malloc(sizeof(ListCase));
-			if(lc==NULL){
-				errorMemoryAllocation0("List::addCaseFirst()");
-			}
-			_initCase(lc);
-
-			if(l!=NULL){
-				(*lc).l=l;
-			}
-			l=lc;
-			return l;
-		}
-
-		void *addCaseFirstAndSetValue(size_t s){
-			return setValue(addCaseFirst(),s);
-		}
-
-		bool freeFirstValue(){
-			if((*l).v!=NULL){
-				free((*l).v);
-				(*l).v=NULL;
-				return true;
-			}
-			warning("List::freeFirstValue(): Value is Null!");
-			return false;
-		}
-
-		bool freeFirstCase(){
-			if(l!=NULL){
-				if((*l).l!=NULL){
-					ListCase *lc=(*l).l;
-					free(l);
-					l=lc;
-					nbEl--;
-					return true;
-				}
-				free(l);
-				l=NULL;
-				nbEl--;
-				return true;
-			}
-			warning("List::freeFirstCase(): List is Empty!");
-			return false;
-		}
-
-		bool freeFirstCaseAndValue(){
-			return false;
-		}
-
-		ListCase *getLastCase(){
-			ListCase *lc=_getLastCase();
-			if(lc!=NULL){
-				return lc;
-			}
-			warning("List::getLastCase(): List is Empty!");
-			return NULL;
-		}
-
-		void *getLastValue(){
-			ListCase *lc=_getLastCase();
-			if(lc!=NULL){
-				if((*lc).v!=NULL){
-					return (*lc).v;
-				}
-				return nullWarning("List::getLastValue(): Value");
-			}
-			warning("List::getLastValue(): List is Empty!");
-			return NULL;
-		}
-
-		ListCase *addCaseLast(){
-			ListCase *lc=_getLastCase();
-			if(lc!=NULL){
-				(*lc).l=(ListCase*)malloc(sizeof(ListCase));
-				if((*lc).l==NULL){
-					errorMemoryAllocation0("List::addCaseLast()");
-				}
-				lc=(*lc).l;
-				_initCase(lc);
-				nbEl++;
-				return lc;
-			}
-
-			l=(ListCase*)malloc(sizeof(ListCase));
-			if(l==NULL){
-				errorMemoryAllocation0("List::addCaseLast()");
-			}
-			_initCase(l);
-			nbEl++;
-			return l;
-		}
-
-		void *addCaseLastAndSetValue(size_t s){
-			return setValue(addCaseLast(),s);
-		}
-
-		bool freeLastValue(){
-			ListCase *lc=_getLastCase();
-			if(lc!=NULL){
-				if((*lc).v!=NULL){
-					free((*lc).v);
-					(*lc).v=NULL;
-					return true;
-				}
-				warning("List::freeLastValue(): Value is Null!");
-				return false;
-			}
-			warning("List::freeLastValue(): List is Empty!");
-			return false;
-		}
-
-		bool freeLastCase(){
-			if(nbEl==1){
-				free(l);
-				l=NULL;
-				nbEl--;
-				return true;
-			}else{
-				ListCase *lc=_getCase(nbEl-2);
-				free((*lc).l);
-				(*lc).l=NULL;
-				nbEl--;
-				return true;
-			}
-			warning("List::freeLastCase(): List is Empty!");
-			return false;
-		}
-
-		bool freeLastCaseAndValue(){
-			if(nbEl==1){
-				if((*l).v!=NULL){
-					free((*l).v);
-					(*l).v=NULL;
-				}else{
-					warning("List::freeLastCaseAndValue(): Value is NULL");
-				}
-
-				free(l);
-				l=NULL;
-				nbEl--;
-				return true;
-			}else{
-				ListCase *lc=_getCase(nbEl-2);
-				if((*(*lc).l).v!=NULL){
-					free((*(*lc).l).v);
-				}else{
-					warning("List::freeLastCaseAndValue(): Value is NULL");
-				}
-
-				free((*lc).l);
-				(*lc).l=NULL;
-				nbEl--;
-				return true;
-			}
-			warning("List::freeLastCaseAndValue(): List is Empty!");
-			return false;
-		}
+		*/
 };
 
 #ifndef _main
+	class ListFrameChar:public ListFrame{
+		public:
+			char val;
+
+			ListFrameChar()
+			:ListFrame(){
+			}
+
+			ListFrameChar(char c)
+			:ListFrame(){
+				val=c;
+			}
+
+			~ListFrameChar(){
+			}
+	};
+
+	class ListChar:public List{
+		public:
+			ListChar()
+			:List(){
+			}
+
+			char getFirstValue(){
+				return (*(ListFrameChar*)getFirstFrame()).val;
+			}
+
+			void addFrameFirst(){
+				List::addFrameFirst(new ListFrameChar());
+			}
+
+			void addFrameFirst(char c){
+				List::addFrameFirst(new ListFrameChar(c));
+			}
+	};
+
 	int main(){
-		List *l;
-		l=new List();
-		ListCase *lc=(*l).getFirstCase();
-		int *i=(int*)(*l).addCaseLastAndSetValue(sizeof(int));
-		(*i)=0;
-		i=(int*)(*l).addCaseLastAndSetValue(sizeof(int));
-		(*i)=1;
-		i=(int*)(*l).addCaseLastAndSetValue(sizeof(int));
-		(*i)=2;
-		printf("nbEl: %d\n",(*l).getNbEl());
+		ListChar *l=new ListChar();
+		ListFrameChar *lf=(ListFrameChar*)(*l).getFirstFrame();
 
-		i=(int*)(*l).getValue(0);
-		printf("getValue 0: %d\n",(*i));
-		i=(int*)(*l).getValue(1);
-		printf("getValue 1: %d\n",(*i));
-		i=(int*)(*l).getValue(2);
-		printf("getValue 2: %d\n",(*i));
+		(*l).addFrameFirst(0);
 
-		i=(int*)(*l).getFirstValue();
-		printf("getFirstValue: %d\n",(*i));
+		printf("getFirstValue : %d\n", (*l).getFirstValue());
 
-		i=(int*)(*l).getLastValue();
-		printf("getLastValue: %d\n",(*i));
+		(*l).addFrameFirst(1);
 
-		bool b=(*l).freeLastCaseAndValue();
-		printf("freeLastCaseAndValue: %d\n",b);
+		printf("getFirstValue : %d\n", (*l).getFirstValue());
 
-		i=(int*)(*l).getLastValue();
-		printf("getLastValue: %d\n",(*i));
+		(*l).addFrameFirst(2);
+
+		printf("getFirstValue : %d\n", (*l).getFirstValue());
+
+		printf("getNbEl : %d\n", (*l).getNbEl());
+
+		lf=(ListFrameChar*)(*l).getFrame(1);
+
+		printf("frame 1 value : %d\n", (*lf).val);
+
+		printf("Appuyez sur une entree pour continuer...");
+    	getchar();
+
 		return 0;
 	}
 #endif
