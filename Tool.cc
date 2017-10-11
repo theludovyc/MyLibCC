@@ -30,14 +30,14 @@ void *Tool_error0(const char *c){
 	return error(c,0);
 }
 
-void *errorMemoryAllocation(const char *c, int i){
+void *Tool_errorMemoryAllocation(const char *c, int i){
 	printf("[<Memory Allocation Failed>: %s]\n",c);
 	exit(i);
 	return NULL;
 }
 
 void *Tool_errorMemoryAllocation0(const char *c){
-	return errorMemoryAllocation(c,0);
+	return Tool_errorMemoryAllocation(c,0);
 }
 
 void *errorMemoryDeallocation(const char *c, int i){

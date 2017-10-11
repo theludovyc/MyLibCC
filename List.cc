@@ -2,27 +2,16 @@
 	#include "Tool.cc"
 #endif
 
-class ListFrame{
-	public:
-		ListFrame *l;
-
-		ListFrame(){
-			l=NULL;
-		}
-
-		void init(ListFrame *lA){
-			l=lA;
-		}
-
-		~ListFrame(){
-		}
+struct ListFrame{
+	struct ListFrame *postFrame;
 };
+typedef struct ListFrame ListFrame;
 
 class List{
 	unsigned int nbEl;
-	ListFrame *l;
+	ListFrame *myPostFrame;
 
-	ListFrame* _getFrame(unsigned int i){
+	/*ListFrame* _getFrame(unsigned int i){
 		if(i<nbEl){
 			if(i==0){
 				return l;
@@ -52,7 +41,7 @@ class List{
 			}
 		}
 		return NULL;
-	}
+	}*/
 
 	/*
 	bool _freeFrame(unsigned int i){
@@ -95,7 +84,7 @@ class List{
 	public:
 		List(){
 			nbEl=0;
-			l=NULL;
+			myPostFrame=NULL;
 		}
 
 		~List(){
@@ -105,24 +94,36 @@ class List{
 			return nbEl;
 		}
 
-		void addFrameFirst(ListFrame *lf){
-			if(l!=NULL){
-				(*lf).l=l;
+		void addFrameFirst(size_t size){
+			if(nbEl==0){
+				myPostFrame=(ListFrame*)malloc(sizeof(ListFrame)+size);
+				if(myPostFrame==NULL){
+					Tool_errorMemoryAllocation0("List::addFrameFirst()");
+				}
 			}
-			l=lf;
 			nbEl++;
 		}
 
-		/*
-		bool freeFirstFrame()
-			nbEl--	
-		*/ 
+		void freeFirstFrame(){
+			if(nbEl==1){
+				free(myPostFrame);
+				myPostFrame=NULL;
+			}
+			nbEl--;
+		}
 
 		ListFrame* getFirstFrame(){
-			if(l!=NULL){
-				return l;
+			if(myPostFrame!=NULL){
+				return myPostFrame;
 			}
 			return (ListFrame*)Tool_warning("List::getFirstFrame() : List is Empty!");
+		}
+
+		void* getFirstValue(){
+			if(myPostFrame!=NULL){
+				return myPostFrame+1;
+			}
+			return (ListFrame*)Tool_warning("List::getFirstValue() : List is Empty!");
 		}
 
 		/*
@@ -130,7 +131,7 @@ class List{
 		}
 		*/
 
-		ListFrame* getFrame(unsigned int i){
+		/*ListFrame* getFrame(unsigned int i){
 			if(nbEl!=0){
 				ListFrame *lf=_getFrame(i);
 				if(lf==NULL){
@@ -148,7 +149,7 @@ class List{
 			}
 			l=lf;
 			nbEl++;
-		}
+		}*/
 
 		/*
 		bool freeLastFrame(){
@@ -169,13 +170,13 @@ class List{
 		}
 		*/
 
-		ListFrame* getLastFrame(){
+		/*ListFrame* getLastFrame(){
 			ListFrame *lf=_getLastFrame();
 			if(lf!=NULL){
 				return lf;
 			}
 			return (ListFrame*)Tool_warning("List::getLastFrame() : List is Empty!");
-		}
+		}*/
 
 		/*
 		void *getValue(unsigned int i){
@@ -248,44 +249,46 @@ class List{
 };
 
 #ifndef _main
-	class ListFrameChar:public ListFrame{
-		public:
-			char val;
-
-			ListFrameChar()
-			:ListFrame(){
-			}
-
-			ListFrameChar(char c)
-			:ListFrame(){
-				val=c;
-			}
-
-			~ListFrameChar(){
-			}
-	};
-
 	class ListChar:public List{
 		public:
 			ListChar()
 			:List(){
 			}
 
-			char getFirstValue(){
-				return (*(ListFrameChar*)getFirstFrame()).val;
+			void addFrameFirst(){
+				List::addFrameFirst(sizeof(char));
 			}
 
-			void addFrameFirst(){
-				List::addFrameFirst(new ListFrameChar());
+			char* getFirstValue(){
+				return (char*)List::getFirstValue();
 			}
 
 			void addFrameFirst(char c){
-				List::addFrameFirst(new ListFrameChar(c));
+				List::addFrameFirst(sizeof(char));
+				(*getFirstValue())=c;
 			}
 	};
 
 	int main(){
 		ListChar *l=new ListChar();
+
+		printf("%ld : size of listframe\n", sizeof(ListFrame));
+
+		(*l).addFrameFirst(1);
+
+		ListFrame *lf=(*l).getFirstFrame();
+
+		printf("%p : lf address\n", lf);
+
+		char *c=(*l).getFirstValue();
+
+		printf("%p : c address\n", c);
+
+		printf("%d : c value\n", *c );
+
+		(*l).freeFirstFrame();
+
+		/*
 		ListFrameChar *lf=(ListFrameChar*)(*l).getFirstFrame();
 
 		(*l).addFrameFirst(0);
@@ -306,7 +309,9 @@ class List{
 
 		printf("frame 1 value : %d\n", (*lf).val);
 
-		printf("Appuyez sur une entree pour continuer...");
+		*/
+
+		printf("Appuyez sur entree pour continuer...");
     	getchar();
 
 		return 0;
