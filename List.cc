@@ -98,7 +98,7 @@ class List{
 			if(nbEl==0){
 				myPostFrame=(ListFrame*)malloc(sizeof(ListFrame)+size);
 				if(myPostFrame==NULL){
-					Tool_errorMemoryAllocation0("List::addFrameFirst()");
+					Tool_error0MemoryAllocation("List::addFrameFirst()");
 				}
 			}
 			nbEl++;
