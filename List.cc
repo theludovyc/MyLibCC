@@ -248,7 +248,7 @@ class List{
 		*/
 };
 
-#ifndef _main
+#ifndef _Main
 	class ListChar:public List{
 		public:
 			ListChar()

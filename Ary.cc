@@ -1,25 +1,25 @@
-#define _Tab
+#define _Ary
 
 #ifndef _Tool
 	#include "Tool.cc"
 #endif
 
-class Tab{
+class Ary{
 	protected:
 		unsigned int length;
 		unsigned int sizeEl;
 		char *ad;
 
 	public:
-		Tab(){
+		Ary(){
 		}
 
-		Tab(unsigned int i,size_t s){
+		Ary(unsigned int i,size_t s){
 			length=i;
 			sizeEl=s;
 			ad=(char*)malloc(sizeof(char)*s*i);
 			if(ad==NULL){
-				Tool_errorMemoryAllocation0("Tab::Tab(unsigned int i,size_t)");
+				Tool_errorMemoryAllocation0("Ary::Ary(unsigned int i,size_t)");
 			}
 		}
 
@@ -28,11 +28,11 @@ class Tab{
 			sizeEl=s;
 			ad=(char*)malloc(sizeof(char)*s*i);
 			if(ad==NULL){
-				Tool_errorMemoryAllocation0("Tab::Tab(unsigned int i,size_t)");
+				Tool_errorMemoryAllocation0("Ary::Ary(unsigned int i,size_t)");
 			}
 		}
 
-		~Tab(){
+		~Ary(){
 			free(ad);
 		}
 
@@ -40,7 +40,7 @@ class Tab{
 			if(i<length){
 				return ad+sizeEl*i;
 			}else{
-				Tool_error0("Tab::void*:getEl(unsigned int): Out of Length!\n");
+				Tool_error0("Ary::void*:getEl(unsigned int): Out of Length!\n");
 			}
 			return NULL;
 		}
@@ -58,10 +58,10 @@ class Tab{
 		}
 };
 
-#ifndef _TabMain
+#ifndef _Main
 	int main(){
-		Tab t;
-		t.init(1024,sizeof(char));
-		printf("length: %d\n",t.getLength());
+		Ary a;
+		a.init(1024,sizeof(char));
+		printf("length: %d\n", a.getLength());
 	}
 #endif
