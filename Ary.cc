@@ -64,7 +64,10 @@ class Ary{
 
 		printf("%d : size of 1 element\n", (*a).getElSize());
 
-		int *i=(*a)[2];
-		printf("%p : i address\n", i);
+		printf("%p : i address\n", (*a)[2]);
+
+		(*(*a)[2])=12;
+
+		printf("%d : i value\n", (*(*a)[2]));
 	}
 #endif
