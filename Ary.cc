@@ -11,11 +11,6 @@ class Ary{
 		void *ad;
 
 	public:
-		Ary(){
-			length=0;
-			ad=NULL;
-		}
-
 		Ary(size_t s, unsigned int i){
 			sizeEl=s;
 			length=i;
