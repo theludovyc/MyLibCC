@@ -46,5 +46,7 @@ class AAry:public Ary{
 
 		printf("%p : ad address\n", (*a).getAd());
 		printf("%p : c address\n", c);
+
+		delete(a);
 	}
 #endif

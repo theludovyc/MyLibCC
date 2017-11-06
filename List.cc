@@ -288,6 +288,8 @@ class List{
 
 		(*l).freeFirstFrame();
 
+		delete(l);
+
 		/*
 		ListFrameChar *lf=(ListFrameChar*)(*l).getFirstFrame();
 
