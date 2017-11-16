@@ -10,6 +10,9 @@
 
 #define _Tool
 
+#define uchar unsigned char
+#define uint unsigned int
+
 void* Tool_warning(const char *c){
 	printf("[<Warning>: %s]\n",c);
 	return NULL;
