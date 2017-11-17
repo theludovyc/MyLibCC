@@ -22,20 +22,24 @@ public:
 	:Vec(posX, posY), AreaR(i, j){
 	}
 
+	//get Left
 	uint getL(){
-		return getX();
+		return x;
 	}
 
+	//get Right
 	uint getR(){
-		return getX()+getW();
+		return x+w;
 	}
 
+	//get Top
 	uint getT(){
-		return getY();
+		return y;
 	}
 
+	//get Bottom
 	uint getB(){
-		return getY()+getH();
+		return y+h;
 	}
 };
 

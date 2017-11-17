@@ -5,11 +5,10 @@
 #endif
 
 class Vec{
-protected:
+public:
 	uint x;
 	uint y;
 
-public:
 	Vec(){
 		x=0;
 		y=0;
@@ -21,22 +20,6 @@ public:
 	}
 
 	~Vec(){
-	}
-
-	uint getX(){
-		return x;
-	}
-
-	uint getY(){
-		return y;
-	}
-
-	void setX(uint posX){
-		x=posX;
-	}
-
-	void setY(uint posY){
-		y=posY;
 	}
 
 	void setXY(uint posX, uint posY){
@@ -52,14 +35,6 @@ public:
 	void operator= (Vec v){
 		x=v.x;
 		y=v.y;
-	}
-
-	void addX(uint posX){
-		x+=posX;
-	}
-
-	void addY(uint posY){
-		y+=posY;
 	}
 
 	void addXY(uint posX, uint posY){
