@@ -2,7 +2,7 @@
 #define _GList
 
 #ifndef _Tool
-	#include "Tool.cc"
+	#include "../Tool.cc"
 #endif
 
 class GListFrame{

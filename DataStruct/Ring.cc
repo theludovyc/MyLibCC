@@ -1,7 +1,7 @@
 #define _Ring
 
 #ifndef _Tool
-	#include "Tool.cc"
+	#include "../Tool.cc"
 #endif
 
 class RingCase{

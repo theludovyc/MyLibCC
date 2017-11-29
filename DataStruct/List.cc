@@ -1,5 +1,7 @@
+#define _List
+
 #ifndef _Tool
-	#include "Tool.cc"
+	#include "../Tool.cc"
 #endif
 
 struct ListFrame{

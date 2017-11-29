@@ -1,7 +1,7 @@
 #define _Ary
 
 #ifndef _Tool
-	#include "Tool.cc"
+	#include "../Tool.cc"
 #endif
 
 class Ary{
