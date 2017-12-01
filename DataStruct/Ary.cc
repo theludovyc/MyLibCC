@@ -14,7 +14,7 @@ class Ary{
 		Ary(size_t s, unsigned int i){
 			sizeEl=s;
 			length=i;
-			ad=malloc(s*i);
+			ad=calloc(i, s);
 			if(ad==NULL){
 				Tool_error0MemoryAllocation("Ary::Ary(unsigned int, size_t)");
 			}

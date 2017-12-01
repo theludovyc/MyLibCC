@@ -15,7 +15,7 @@ class GListFrame{
 			postFrame=NULL;
 		}
 
-		~GListFrame(){
+		virtual ~GListFrame(){
 		}
 };
 
