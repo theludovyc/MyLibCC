@@ -1,7 +1,7 @@
 #define _AreaSquare
 
 #ifndef _Tool
-#include "../Tool.cc"
+#include "../tool.cc"
 #endif
 
 class AreaSquare{

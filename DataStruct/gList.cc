@@ -2,7 +2,7 @@
 #define _GList
 
 #ifndef _Tool
-	#include "../Tool.cc"
+	#include "../tool.cc"
 #endif
 
 class GListFrame{
@@ -165,7 +165,7 @@ public:
 	}
 };
 
-#ifndef _Main
+#ifndef _GListMain
 class GListFrameChar:public GListFrame{
 public:
 	char c;

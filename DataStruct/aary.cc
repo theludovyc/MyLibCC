@@ -22,7 +22,7 @@ class AAry:public Ary{
 			if(i<lengthX && j<lengthY){
 				return ad+sizeEl*(j*lengthX+i);
 			}
-			Tool_error0OutOfLength("AAry::operator()(unsigned int, unsigned int)");
+			Tool_error1OutOfLength("AAry::operator()(unsigned int, unsigned int)");
 			return NULL;
 		}
 };

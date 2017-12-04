@@ -1,7 +1,7 @@
 #define _AreaR
 
 #ifndef _Tool
-#include "../Tool.cc"
+#include "../tool.cc"
 #endif
 
 class AreaR{	

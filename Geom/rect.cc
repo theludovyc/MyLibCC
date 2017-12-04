@@ -1,7 +1,7 @@
 #define _Rect
 
 #ifndef _Tool
-#include "../Tool.cc"
+#include "../tool.cc"
 #endif
 
 #ifndef _Vec
@@ -43,7 +43,7 @@ public:
 	}
 };
 
-#ifndef _Main
+#ifndef _RectMain
 	int main(){
 		Rect *r=new Rect();
 

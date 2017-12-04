@@ -1,7 +1,9 @@
 #define _AryInt
 
 #ifndef _Ary
+#define _Main
 #include "Ary.cc"
+#undef _Main
 #endif
 
 class AryInt:public Ary{
