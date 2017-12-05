@@ -1,23 +1,24 @@
 #define _GListChars
 
 #ifndef _GList
+#define _GListMain
 #include "gList.cc"
+#undef _GListMain
 #endif
 
-class GListFrameChars : public GListFrame{
-public:
-	uchar *c;
+#ifndef _DynAryChar
+#include "dynAryChar.cc"
+#endif
 
+
+
+class GListFrameChars : public GListFrame, public DynAryChar{
+public:
 	GListFrameChars(uint i)
-		:GListFrame(){
-		c=(uchar*)calloc(i, sizeof(char));
-		if(c==NULL){
-			Tool_error0MemoryAllocation("GListFrameChars(...)");
-		}
+		:GListFrame(), DynAryChar(i){
 	}
 
 	~GListFrameChars(){
-		free(c);
 	}
 };
 
@@ -38,8 +39,18 @@ public:
 	GListFrameChars* getFrame(){
 		return (GListFrameChars*)GList::getFrame();
 	}
-
-	uchar* getChars(){
-		return (*GListChars::getFrame()).c;
-	}
 };
+
+#ifndef _GListCharsMain
+int main(){
+	GListChars (*l)=new GListChars();
+
+	(*l).addAfter(1);
+
+	printf("%d : length\n", (* (*l).getFrame() ).getLength() );
+
+	delete(l);
+	
+	return 0;
+}
+#endif

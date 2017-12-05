@@ -2,7 +2,7 @@
 
 #ifndef _Ary
 #define _AryMain
-#include "Ary.cc"
+#include "ary.cc"
 #undef _AryMain
 #endif
 
