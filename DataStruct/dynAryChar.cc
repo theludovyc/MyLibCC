@@ -1,22 +1,13 @@
-#define _DynAryChar
+#include "dynAryChar.h"
 
-#ifndef _DynAry
-#define _DynAryMain
-#include "dynAry.cc"
-#undef _DynAryMain
-#endif
+DynAryChar::DynAryChar(uint i)
+	:DynAry(sizeof(char), i){
+}
 
-class DynAryChar : public DynAry{
-public:
-	DynAryChar(uint i)
-		:DynAry(sizeof(char), i){
-	}
+char* DynAryChar::operator[] (uint i){
+	return (char*)Ary::operator[](i);
+}
 
-	char* operator[] (uint i){
-		return (char*)Ary::operator[](i);
-	}
-
-	char* getAd(){
-		return (char*)Ary::getAd();
-	}
-};
+char* DynAryChar::getAd(){
+	return (char*)Ary::getAd();
+}

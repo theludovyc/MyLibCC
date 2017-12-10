@@ -1,73 +1,34 @@
-#define _Ary
+#include "ary.h"
 
-#ifndef _Tool
-	#include "../tool.cc"
-#endif
-
-class Ary{
-	protected:
-		unsigned int length;
-		size_t sizeEl;
-		void *ad;
-
-	public:
-		Ary(size_t s, unsigned int i){
-			sizeEl=s;
-			length=i;
-			ad=calloc(i, s);
-			if(ad==NULL){
-				Tool_error1MemoryAllocation("Ary::Ary(unsigned int, size_t)");
-			}
-		}
-
-		~Ary(){
-			free(ad);
-		}
-
-		void* operator[] (unsigned int i){
-			if(i<length){
-				return ad+sizeEl*i;
-			}
-			Tool_error1OutOfLength("Ary::operator[](unsigned int)");
-			return NULL;
-		}
-
-		void* getAd(){
-			return ad;
-		}
-
-		unsigned int getLength(){
-			return length;
-		}
-
-		size_t getElSize(){
-			return sizeEl;
-		}
-};
-
-#ifndef _AryMain
-class AryInt:public Ary{
-public:
-	AryInt(unsigned int i)
-		:Ary(sizeof(int), i){
+Ary::Ary(size_t s, unsigned int i){
+	sizeEl=s;
+	length=i;
+	ad=calloc(i, s);
+	if(ad==NULL){
+		Tool_error1MemoryAllocation("Ary::Ary(unsigned int, size_t)");
 	}
-
-	int* operator[] (unsigned int i){
-		return (int*)Ary::operator[](i);
-	}
-};
-
-int main(){
-	AryInt *a=new AryInt(32);
-	printf("length: %d\n", (*a).getLength());
-	printf("%p : ad address\n", (*a).getAd());
-	
-	printf("%d : size of 1 element\n", (*a).getElSize());
-
-	printf("%p : i address\n", (*a)[2]);
-
-	(*(*a)[2])=12;
-
-	printf("%d : i value\n", (*(*a)[2]));
 }
-#endif
+
+Ary::~Ary(){
+	free(ad);
+}
+
+void* Ary::operator[] (unsigned int i){
+	if(i<length){
+		return ad+sizeEl*i;
+	}
+	Tool_error1OutOfLength("Ary::operator[](unsigned int)");
+	return NULL;
+}
+
+void* Ary::getAd(){
+	return ad;
+}
+
+unsigned int Ary::getLength(){
+	return length;
+}
+
+size_t Ary::getElSize(){
+	return sizeEl;
+}

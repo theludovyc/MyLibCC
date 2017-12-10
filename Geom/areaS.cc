@@ -1,35 +1,25 @@
-#define _AreaSquare
+#include "areaS.h"
 
-#ifndef _Tool
-#include "../tool.cc"
-#endif
+AreaS::AreaS(){
+	w=0;
+}
 
-class AreaSquare{
-protected:
-	uint w;
+AreaS::AreaS(uint i){
+	w=i;
+}
 
-public:
-	AreaS(){
-		w=0;
-	}
+uint AreaS::getW(){
+	return w;
+}
 
-	AreaS(uint i){
-		w=i;
-	}
+uint AreaS::getH(){
+	return w;
+}
 
-	uint getW(){
-		return w;
-	}
+void AreaS::setW(uint i){
+	w=i;
+}
 
-	uint getH(){
-		return w;
-	}
-
-	void setW(uint i){
-		w=i;
-	}
-
-	void setH(uint i){
-		w=i;
-	}
-};
+void AreaS::setH(uint i){
+	w=i;
+}

@@ -1,18 +1,9 @@
-#define _AryInt
+#include "aryInt.h"
 
-#ifndef _Ary
-#define _Main
-#include "ary.cc"
-#undef _Main
-#endif
+AryInt::AryInt(unsigned int i)
+	:Ary(sizeof(int), i){
+}
 
-class AryInt:public Ary{
-public:
-	AryInt(unsigned int i)
-		:Ary(sizeof(int), i){
-	}
-
-	int* operator[] (unsigned int i){
-		return (int*)Ary::operator[](i);
-	}
-};
+int* AryInt::operator[] (unsigned int i){
+	return (int*)Ary::operator[](i);
+}

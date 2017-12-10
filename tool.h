@@ -28,4 +28,12 @@ void Tool_errorMemoryAllocation(const char *c, int i);
 
 void Tool_error1MemoryAllocation(const char *c);
 
+void Tool_errorMemoryReallocation(const char *c, int i);
+
+void Tool_error1MemoryReallocation(const char *c);
+
+void Tool_errorMemoryFree(const char *c, int i);
+
+void Tool_error1MemoryFree(const char *c);
+
 #endif

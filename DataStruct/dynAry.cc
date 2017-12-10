@@ -1,43 +1,22 @@
-#define _DynAry
+#include "dynAry.h"
 
-#ifndef _Ary
-#define _AryMain
-#include "ary.cc"
-#undef _AryMain
-#endif
-
-class DynAry: public Ary{
-public:
-	DynAry(size_t s, uint i)
-		:Ary(s, i){
-	}
-
-	void resize(uint i){
-		void *tmp=realloc(ad, sizeEl*i);
-		if(tmp==NULL){
-			Tool_error1MemoryReallocation("DynAry::Resize(...)");
-		}
-		length=i;
-		ad=tmp;
-	}
-
-	void resize_add(uint i){
-		resize(length+i);
-	}
-
-	void resize_mul(uint i){
-		resize(length*i);
-	}
-};
-
-#ifndef _DynAryMain
-int main(){
-	DynAry *tab=new DynAry(sizeof(char), 4);
-
-	printf("%d : length\n", (*tab).getLength());
-
-	(*tab).resize_mul(2);
-
-	printf("%d : length\n", (*tab).getLength());
+DynAry::DynAry(size_t s, uint i)
+	:Ary(s, i){
 }
-#endif
+
+void DynAry::resize(uint i){
+	void *tmp=realloc(ad, sizeEl*i);
+	if(tmp==NULL){
+		Tool_error1MemoryReallocation("DynAry::Resize(...)");
+	}
+	length=i;
+	ad=tmp;
+}
+
+void DynAry::resize_add(uint i){
+	resize(length+i);
+}
+
+void DynAry::resize_mul(uint i){
+	resize(length*i);
+}
