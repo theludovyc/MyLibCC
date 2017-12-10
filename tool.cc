@@ -1,17 +1,4 @@
-#ifndef _stdlib
-	#include <stdlib.h>
-	#define _stdlib
-#endif
-
-#ifndef _stdio
-	#include <stdio.h>
-	#define _stdio
-#endif
-
-#define _Tool
-
-#define uchar unsigned char
-#define uint unsigned int
+#include "tool.h"
 
 void* Tool_warning(const char *c){
 	printf("[<Warning>: %s]\n", c);

@@ -1,26 +1,16 @@
-#define _AreaR
+#include "areaR.h"
 
-#ifndef _Tool
-#include "../tool.cc"
-#endif
-
-class AreaR{	
-public:
-	uint w;
-	uint h;
-
-	AreaR(){
-		w=0;
-		h=0;
-	}
+AreaR::AreaR(){
+	w=0;
+	h=0;
+}
 	
-	AreaR(uint i, uint j){
-		w=i;
-		h=j;
-	}
+AreaR::AreaR(uint i, uint j){
+	w=i;
+	h=j;
+}
 
-	void setWH(uint i, uint j){
-		w=i;
-		h=i;
-	}
-};
+void AreaR::setWH(uint i, uint j){
+	w=i;
+	h=i;
+}

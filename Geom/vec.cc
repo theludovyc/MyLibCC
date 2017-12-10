@@ -1,65 +1,52 @@
-#define _Vec
+#include "vec.h"
 
-#ifndef _Tool
-#include "../tool.cc"
-#endif
+Vec::Vec(){
+	x=0;
+	y=0;
+}
 
-class Vec{
-public:
-	uint x;
-	uint y;
+Vec::Vec(uint posX, uint posY){
+	x=posX;
+	y=posY;
+}
 
-	Vec(){
-		x=0;
-		y=0;
+void Vec::setXY(uint posX, uint posY){
+	x=posX;
+	y=posY;
+}
+
+void Vec::setXY(Vec v){
+	x=v.x;
+	y=v.y;
+}
+
+void Vec::operator= (Vec v){
+	x=v.x;
+	y=v.y;
+}
+
+void Vec::addXY(uint posX, uint posY){
+	x+=posX;
+	y+=posY;
+}
+
+void Vec::addXY(Vec v){
+	x+=v.x;
+	y+=v.y;
+}
+
+void Vec::operator+= (Vec v){
+	x+=v.x;
+	y+=v.y;
+}
+
+Vec Vec::operator+ (Vec v){
+	return Vec(x+v.x, y+v.y);
+}
+
+bool Vec::operator== (Vec v){
+	if(x==v.x && y==v.y){
+		return true;
 	}
-
-	Vec(uint posX, uint posY){
-		x=posX;
-		y=posY;
-	}
-
-	~Vec(){
-	}
-
-	void setXY(uint posX, uint posY){
-		x=posX;
-		y=posY;
-	}
-
-	void setXY(Vec v){
-		x=v.x;
-		y=v.y;
-	}
-
-	void operator= (Vec v){
-		x=v.x;
-		y=v.y;
-	}
-
-	void addXY(uint posX, uint posY){
-		x+=posX;
-		y+=posY;
-	}
-
-	void addXY(Vec v){
-		x+=v.x;
-		y+=v.y;
-	}
-
-	void operator+= (Vec v){
-		x+=v.x;
-		y+=v.y;
-	}
-
-	Vec operator+ (Vec v){
-		return Vec(x+v.x, y+v.y);
-	}
-
-	uchar operator== (Vec v){
-		if(x==v.x && y==v.y){
-			return 1;
-		}
-		return 0;
-	}
-};
+	return false;
+}
