@@ -22,4 +22,4 @@ test:
 
 clean:
 	rm -f $(BUILD_FOLDER)/*.o
-	rm -f $(BIN_FOLDER)/*.exe
+	rm -f $(BIN_FOLDER)/*.out

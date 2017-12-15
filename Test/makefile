@@ -9,9 +9,9 @@ IFLAGS = -I"../"
 IGM = -I"../Geom" $(IFLAGS)
 IDS = -I"../DataStruct" $(IFLAGS)
 
-BUILD0 = @(cd $(BUILD_FOLDER) && g++ -o $(BIN_FOLDER)/$@.exe $(TEST_FOLDER)/$@.cc
+BUILD0 = @(cd $(BUILD_FOLDER) && g++ -o $(BIN_FOLDER)/$@.out $(TEST_FOLDER)/$@.cc
 
-BUILD1 = @printf "%s.exe compiled\n" $@
+BUILD1 = @printf "%s.out compiled\n" $@
 
 all: testRect testAry testDynAry testGListChars
 
