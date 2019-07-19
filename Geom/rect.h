@@ -1,7 +1,7 @@
 #ifndef _Rect
 #define _Rect
 
-#include "tool.h"
+#include "../tool.h"
 #include "vec.h"
 #include "areaR.h"
 

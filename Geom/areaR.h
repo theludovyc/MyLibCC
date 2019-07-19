@@ -1,7 +1,7 @@
 #ifndef _AreaR
 #define _AreaR
 
-#include "tool.h"
+#include "../tool.h"
 
 class AreaR{	
 public:
