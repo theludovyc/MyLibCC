@@ -1,7 +1,7 @@
 #ifndef _GList
 #define _GList
 
-#include "tool.h"
+#include "../tool.h"
 
 class GListFrame{
 	public:

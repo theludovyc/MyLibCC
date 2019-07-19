@@ -1,7 +1,7 @@
 #ifndef _Ary
 #define _Ary
 
-#include "tool.h"
+#include "../tool.h"
 
 class Ary{
 	protected:
